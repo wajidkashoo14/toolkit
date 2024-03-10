@@ -11,7 +11,9 @@ function TodoList() {
   const [currentTodo, setCurrentTodo] = useState("");
   const [currentTodoId, setCurrentTodoId] = useState(null);
   const dispatch = useDispatch();
-  const { todoList, getTodosFromApi } = useSelector((state) => state.todo);
+  const { todoList, getTodosFromApi, loading } = useSelector(
+    (state) => state.todo
+  );
 
   function handleAddTodo() {
     dispatch(addTodo(currentTodo));
@@ -38,10 +40,12 @@ function TodoList() {
   }
 
   useEffect(() => {
-    dispatch(fetchTodos())
-  },[])
+    dispatch(fetchTodos());
+  }, []);
 
-
+  if (loading) {
+    return <h1>Please wait fetching data !!</h1>;
+  }
 
   return (
     <div>
